@@ -1,3 +1,4 @@
+import 'package:adopt_app/providers/auth_provider.dart';
 import 'package:adopt_app/providers/pets_provider.dart';
 import 'package:adopt_app/widgets/pet_card.dart';
 import 'package:flutter/material.dart';
@@ -14,23 +15,43 @@ class HomePage extends StatelessWidget {
         title: const Text("Pet Adopt"),
       ),
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            ListTile(
-              title: const Text("Signin"),
-              trailing: const Icon(Icons.login),
-              onTap: () {},
-            ),
-            ListTile(
-              title: const Text("Signup"),
-              trailing: const Icon(Icons.how_to_reg),
-              onTap: () {
-                GoRouter.of(context).push('/signup');
-              },
-            )
-          ],
-        ),
+        child: Consumer<AuthProvider>(
+            builder: ((context, Provider, child) => ListView(
+                  padding: EdgeInsets.zero,
+                  children: Provider.isAuth
+                      ? [
+                          ListTile(
+                            title: const Text("Signin"),
+                            trailing: const Icon(Icons.login),
+                            onTap: () {
+                              GoRouter.of(context).push("/signin");
+                            },
+                          ),
+                          ListTile(
+                            title: const Text("Signup"),
+                            trailing: const Icon(Icons.how_to_reg),
+                            onTap: () {
+                              GoRouter.of(context).push('/signup');
+                            },
+                          )
+                        ]
+                      : [
+                          ListTile(
+                            title: const Text("Signin"),
+                            trailing: const Icon(Icons.login),
+                            onTap: () {
+                              GoRouter.of(context).push("/signin");
+                            },
+                          ),
+                          ListTile(
+                            title: const Text("Signup"),
+                            trailing: const Icon(Icons.how_to_reg),
+                            onTap: () {
+                              GoRouter.of(context).push('/signup');
+                            },
+                          )
+                        ],
+                ))),
       ),
       body: SingleChildScrollView(
         child: Column(

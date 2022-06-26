@@ -10,7 +10,7 @@ class User {
   User({
     this.id,
     required this.username,
-    this.password,
+    password,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
